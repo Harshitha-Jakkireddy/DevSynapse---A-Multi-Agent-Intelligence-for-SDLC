@@ -1,5 +1,8 @@
+
 fastapi
 uvicorn
 python-dotenv
-groq
 pydantic
+langchain-core
+langchain-groq
+langgraph
