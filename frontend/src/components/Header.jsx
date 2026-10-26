@@ -1,18 +1,29 @@
+
+import { Activity, Sparkles } from "lucide-react";
+
 function Header() {
   return (
-    <div className="header">
-      <div>
-        <h2>AI Development Workspace</h2>
+    <header className="header">
+      <div className="header-copy">
+        <div className="header-eyebrow">
+          <Sparkles size={14} />
+          <span>YOUR AI DEVELOPMENT WORKSPACE</span>
+        </div>
+
+        <h2>Build something extraordinary.</h2>
+
         <p>
-          Transform your software idea into a structured development plan.
+          Turn your software idea into requirements, plans, and architecture.
         </p>
       </div>
 
       <div className="online-status">
-        <div className="online-dot"></div>
-        AI Agents Online
+        <span className="online-dot" />
+        <Activity size={15} />
+        <span>AI Workspace</span>
+        <span className="status-label">Ready</span>
       </div>
-    </div>
+    </header>
   );
 }
 

@@ -1,12 +1,16 @@
+
 import {
   Bot,
   FileText,
   CalendarDays,
   Boxes,
+  Code2,
   CheckCircle2,
   Clock,
   LoaderCircle,
   LayoutDashboard,
+  Sparkles,
+  ChevronRight,
 } from "lucide-react";
 
 function Sidebar({
@@ -16,21 +20,10 @@ function Sidebar({
   agentStatus,
 }) {
   const agents = [
-    {
-      id: "requirements",
-      name: "Requirements",
-      icon: FileText,
-    },
-    {
-      id: "planning",
-      name: "Planning",
-      icon: CalendarDays,
-    },
-    {
-      id: "architecture",
-      name: "Architecture",
-      icon: Boxes,
-    },
+    { id: "requirements", name: "Requirements", icon: FileText },
+    { id: "planning", name: "Planning", icon: CalendarDays },
+    { id: "architecture", name: "Architecture", icon: Boxes },
+    { id: "code_generation", name: "Code Generation", icon: Code2 },
   ];
 
   const getStatusIcon = (status) => {
@@ -52,28 +45,39 @@ function Sidebar({
 
   return (
     <aside className="sidebar">
-      <div className="logo">
+      <button
+        className="logo"
+        onClick={() => setActiveTab(null)}
+        title="Return to workspace home"
+      >
         <div className="logo-icon">
-          <Bot size={24} />
+          <Bot size={25} />
+          <span className="logo-sparkle">
+            <Sparkles size={11} />
+          </span>
         </div>
 
-        <div>
-          <h1>AgentDev</h1>
-          <p>AI Software Studio</p>
+        <div className="logo-copy">
+          <h1>DevSynapse</h1>
+          <p>AI Developer Studio</p>
         </div>
-      </div>
+      </button>
 
       <div className="sidebar-section">
         <p className="sidebar-title">WORKSPACE</p>
 
-        <button className="nav-item active">
+        <button
+          className={`nav-item ${!activeTab ? "active" : ""}`}
+          onClick={() => setActiveTab(null)}
+        >
           <LayoutDashboard size={19} />
           <span>Dashboard</span>
+          <ChevronRight size={15} className="nav-chevron" />
         </button>
       </div>
 
       <div className="sidebar-section">
-        <p className="sidebar-title">AI AGENTS</p>
+        <p className="sidebar-title">DEVELOPMENT AGENTS</p>
 
         {agents.map((agent) => {
           const Icon = agent.icon;
@@ -86,21 +90,50 @@ function Sidebar({
             <button
               key={agent.id}
               disabled={!isClickable}
-              onClick={() => isClickable && setActiveTab(agent.id)}
+              onClick={() => {
+                if (isClickable) {
+                  setActiveTab(agent.id);
+                }
+              }}
+              title={
+                !isClickable
+                  ? "Complete the previous stage to access this agent"
+                  : agent.name
+              }
               className={`nav-item ${
                 activeTab === agent.id ? "active" : ""
               } ${!isClickable ? "disabled" : ""}`}
             >
-              <Icon size={19} />
+              <span className="agent-nav-icon">
+                <Icon size={18} />
+              </span>
 
-              <span>{agent.name}</span>
+              <span className="agent-nav-name">
+                {agent.name}
+              </span>
 
-              <div className="agent-status">
+              <span className="agent-status">
                 {getStatusIcon(status)}
-              </div>
+              </span>
             </button>
           );
         })}
+      </div>
+
+      <div className="sidebar-footer">
+        <div className="sidebar-footer-icon">
+          <Sparkles size={17} />
+        </div>
+
+        <div>
+          <p className="sidebar-footer-title">
+            AI-powered workflow
+          </p>
+
+          <p className="sidebar-footer-subtitle">
+            From idea to generated code
+          </p>
+        </div>
       </div>
     </aside>
   );
